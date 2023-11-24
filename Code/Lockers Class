@@ -1,0 +1,74 @@
+import java.util.Scanner;
+public class LockersApp { //Start of LockerApp class
+ public static void main(String[] args) {
+ int id, hour;
+ String choice;
+ HashTable lockers = new HashTable();
+ Scanner in = new Scanner(System.in);
+ 
+ System.out.print("****");
+ System.out.print(" Luggage Lockers Service ");
+ System.out.print("****\n");
+ do {
+ System.out.println("\nServices We Do:");
+//System operation 
+ System.out.println("a) Rent a Locker");
+ System.out.println("b) Find Your Locker");
+ System.out.println("c) Free the Locker");
+ System.out.println("d) Display the Locker list");
+ System.out.println("e) Exit the program");
+ System.out.print("Your choice is: ");
+ choice=in.nextLine();
+ 
+ //insert visitor info (element) to the hash table
+ if(choice.equalsIgnoreCase("a")) {
+ if(lockers.isFull()) //check if the hash table is full
+ System.out.println("\nNo available lockers");
+ else {
+ // take the user info 
+ System.out.print("\nYour National ID: ");
+ id = in.nextInt();
+ System.out.print("How many hours do you want to rent?: ");
+ hour = in.nextInt();
+ in.nextLine();
+ lockers.insert(id, hour);
+ } 
+ //Find your locker 
+ }else if(choice.equalsIgnoreCase("b")) {
+ if(lockers.isEmpty()) // the list is empty 
+ System.out.println("\nThere isn't any rented locker until now");
+ else {
+ //take the visitor id to find his\her locker 
+ System.out.print("\nYour National ID: ");
+ int findLocker = in.nextInt();
+ in.nextLine();
+ System.out.println(lockers.search(findLocker) != -1?"Found successfully":"ERROR! no 
+locker is retned with the id => "+findLocker);
+ } 
+ //Delete visitor info (element) from the hash table
+ }else if(choice.equalsIgnoreCase("c")) {
+ if(lockers.isEmpty())//the list is empty 
+ System.out.println("\nThere isn't any rented locker until now");
+ else { 
+ System.out.print("\nYour National ID: ");
+ int delLocker = in.nextInt(); 
+ in.nextLine();
+ System.out.println(lockers.deleteElement(delLocker) != -1?"Deleted 
+successfully":"ERROR! no locker is retned with the id => "+ delLocker);
+ }
+ //Display the list
+ }else if(choice.equalsIgnoreCase("d")) {
+ if(lockers.isEmpty())//the list is empty 
+ System.out.println("\nThere isn't any rented locker until now");
+ else { 
+ System.out.println("\nThe Locker List");
+ lockers.display(); 
+ }
+ // In case if any Invalid choice
+ }else if(!choice.equalsIgnoreCase("e"))
+ System.out.println("\nINVALID CHOISE");
+ System.out.println("------------------------------------------------");
+ }while(!choice.equalsIgnoreCase("e"));
+ System.out.println("End of Services");
+ }
+} //End of LockerApp class
