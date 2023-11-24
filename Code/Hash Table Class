@@ -1,0 +1,105 @@
+public class HashTable { //Start of HashTable class
+ private int numOfEle = 0;
+ private int LockerSize = 10; //usable size
+ private int size = 13; //size of the hash table
+ private Visitor[] hashTable = new Visitor[size]; // hash table with 30% extra size to maintain the 
+optimum performance
+ 
+ //hush function
+ public int hashFunc(int key, int i){
+ return (key + (i*i)) % size; //hash function for quadratic probing
+ }
+ //insert method 
+ public boolean insert(int id, int hour){
+ int pos = hashFunc(id,0); 
+ if(hashTable[pos] == null) { //check if empty insert
+ hashTable[pos] = new Visitor(id, hour);
+ numOfEle++;
+ System.out.println("Your locker number is " + pos);
+ return true; //success
+ }else if(hashTable[pos] != null && hashTable[pos].getId() != id) //empty? id is already 
+exist?
+ for (int i = 1; i < hashTable.length; i++) { //collision 
+ pos = hashFunc(id, i);
+ if(hashTable[pos] == null){
+ hashTable[pos] = new Visitor(id, hour);
+ numOfEle++;
+System.out.println("Your locker number is " + pos);
+ return true; //success
+ } 
+ }
+ else // if dublicated
+ { System.out.println("This ID is already exist. ") ;
+ return true; //success
+ }
+ return false; 
+ }
+ //search method to find locker
+ public int search(int ele){
+ int loc = -1;
+ int pos = hashFunc(ele, 0);
+ if(hashTable[pos] != null && hashTable[pos].getId() == ele) {
+ loc = pos;
+ System.out.println(hashTable[loc].toString());
+ System.out.println("Your locker number is " + pos);
+ }else
+ for (int i = 1; i < hashTable.length; i++) {
+ pos = hashFunc(ele, i);
+ if(hashTable[pos] != null && hashTable[pos].getId() == ele) {
+ loc = pos;
+ System.out.println(hashTable[loc].toString());
+ System.out.println("Your locker number is " + pos);
+ } 
+ }
+ return loc;
+ }
+ //delete method 
+ public int deleteElement(int keyDel){
+ int loc = -1; //does not exist
+ int pos = hashFunc(keyDel, 0);
+ if(hashTable[pos] != null && hashTable[pos].getId() == keyDel) { //if key found then delete
+ System.out.println(hashTable[pos].toString());
+ hashTable[pos] = null; //delete the reserved Locker
+ numOfEle--;
+ loc = pos;
+ }else
+ for (int i = 1; i < hashTable.length; i++) { //collision
+ pos = hashFunc(keyDel, i);
+ if(hashTable[pos] != null && hashTable[pos].getId() == keyDel) {
+ loc = pos;
+ System.out.println(hashTable[loc].toString());
+ System.out.println("Your Locker number is " + pos);
+} 
+ 
+ }
+ return loc; //if does not exist in the hashTable
+ }
+ //display all elements
+ public void display() {
+ System.out.println("------------------------------------------------");
+ System.out.println( " ID \t | Hours \t | Locker");
+ System.out.println("------------------------------------------------");
+ for(int j=0; j<size; j++)
+ {
+ if(hashTable[j] != null)
+ {
+ System.out.print(" "+hashTable[j].getId() + " \t| ");
+ System.out.println(hashTable[j].getHour() + "\t\t| "+j);
+ }
+ 
+ }
+ System.out.println("");
+ }
+ // check if the list empty
+ public boolean isEmpty() {
+ if(numOfEle == 0) 
+ return true; 
+ return false;
+ }
+ //check if the list is 70% full
+ public boolean isFull() {
+ if(numOfEle == LockerSize) 
+ return true;
+ return false;
+ }
+} //End of HashTable class
