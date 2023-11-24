@@ -1,0 +1,29 @@
+public class Visitor { //Start of Visitor class
+ private int id;
+ private int hour; 
+ //Constructor to set the initial values 
+ public Visitor(int i, int h) {
+ id = i;
+ hour = h;
+} 
+ // get and set methods to retrieve and update the attribute's value
+ public void setId(int i) {
+ id = i;
+ }
+ 
+ public int getId() {
+ return id;
+ }
+ 
+ public void setHour(int h) {
+ hour = h;
+ }
+ 
+ public int getHour() {
+ return hour;
+ }
+ 
+ public String toString() {
+ return "Your ID: "+id+" You rented the locker for: "+hour+" hours";
+ }
+} //End of Visitor class
